@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <node pkg="rviz" type="rviz" name="myrviz" output="screen">
+    <rosparam>
+      base_calibration_name: "/StereoCalSrv"
+    </rosparam>
+  </node>
+</launch>
