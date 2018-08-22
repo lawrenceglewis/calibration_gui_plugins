@@ -22,11 +22,13 @@ namespace cal_gui_plugin
        ros::ServiceClient client2_;
        ros::ServiceClient client3_;
        ros::ServiceClient client4_;
+       ros::ServiceClient client5_;
     public Q_SLOTS:
       void setbutton1Clicked ();
       void setbutton2Clicked ();
       void setbutton3Clicked ();
       void setbutton4Clicked ();
+      void setbutton5Clicked ();
     private:
       QLineEdit* allowed_residual_;
 
