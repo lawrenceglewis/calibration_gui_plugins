@@ -37,7 +37,7 @@ namespace cal_gui_plugin
     if(!pnh.getParam("base_calibration_name",bcn))
     {
       ROS_ERROR("MUST SET base_calibration_name");
-      bcn="/ICalSrv";
+      bcn="/IntrinsicCalSrv";
       pnh.setParam("base_calibration_name",bcn);
     }
     ROS_INFO("base_calibration_name: %s",bcn.c_str());
@@ -46,14 +46,12 @@ namespace cal_gui_plugin
     std::string run_service_name = bcn + "Run";
     std::string obs_service_name = bcn + "Obs";
     std::string save_service_name = bcn + "Save";
-    std::string load_service_name = bcn + "Load";
 
     client1_ = pnh.serviceClient<std_srvs::Trigger>(start_service_name);
     client2_ = pnh.serviceClient<std_srvs::Trigger>(obs_service_name);
     ROS_INFO("%s", obs_service_name.c_str());
     client3_ = pnh.serviceClient<industrial_extrinsic_cal::cal_srv_solve>(run_service_name);
     client4_ = pnh.serviceClient<std_srvs::Trigger>(save_service_name);
-    client5_ = pnh.serviceClient<std_srvs::Trigger>(load_service_name);
 
     allowed_residual_ = new QLineEdit(parent);
 
@@ -62,7 +60,6 @@ namespace cal_gui_plugin
     QPushButton* call_service_btn_2 = new QPushButton( "OBS" , parent );
     QPushButton* call_service_btn_3 = new QPushButton( "Run" , parent );
     QPushButton* call_service_btn_4 = new QPushButton( "Save" , parent );
-    QPushButton* call_service_btn_5 = new QPushButton( "Load" , parent );
     QLabel* allowed_resid_lb = new QLabel( "Allowed Residal" );
     final_resid_lb_ = new QLabel( "Final Residal: " );
     obs_msg_lb_ = new QLabel("Observation Message: ");
@@ -71,7 +68,7 @@ namespace cal_gui_plugin
     QGridLayout* controls_layout = new QGridLayout();
 
     controls_layout->addWidget( call_service_btn_1, 1, 0 );
-    controls_layout->addWidget( bcn_name_lb       , 0, 1 );
+    controls_layout->addWidget( bcn_name_lb       , 0, 1);
     controls_layout->addWidget( call_service_btn_2, 2, 0 );
     controls_layout->addWidget( obs_msg_lb_       , 2, 1 );
     controls_layout->addWidget( call_service_btn_3, 3, 0 );
@@ -79,7 +76,6 @@ namespace cal_gui_plugin
     controls_layout->addWidget( allowed_residual_ , 3, 2 );
     controls_layout->addWidget( final_resid_lb_   , 4, 2 );
     controls_layout->addWidget( call_service_btn_4, 5, 0 );
-    controls_layout->addWidget( call_service_btn_5, 5, 1 );
 
     setLayout( controls_layout );
 
@@ -87,7 +83,6 @@ namespace cal_gui_plugin
     connect( call_service_btn_2, SIGNAL( clicked( bool )), this, SLOT( setbutton2Clicked()));
     connect( call_service_btn_3, SIGNAL( clicked( bool )), this, SLOT( setbutton3Clicked()));
     connect( call_service_btn_4, SIGNAL( clicked( bool )), this, SLOT( setbutton4Clicked()));
-    connect( call_service_btn_5, SIGNAL( clicked( bool )), this, SLOT( setbutton5Clicked()));
 
   }
 
@@ -154,18 +149,6 @@ namespace cal_gui_plugin
   {
     std_srvs::Trigger srv;
     if (client4_.call(srv))
-    {
-      ROS_INFO("Output %s",srv.response.message.c_str());
-    }
-    else
-    {
-      ROS_ERROR("Failed to call service Trigger");
-    }
-  }
-  void calPanel::setbutton5Clicked ()
-  {
-    std_srvs::Trigger srv;
-    if (client5_.call(srv))
     {
       ROS_INFO("Output %s",srv.response.message.c_str());
     }
