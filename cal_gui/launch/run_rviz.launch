@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <launch>
 
-  <node pkg="rviz" type="rviz" name="myrviz" output="screen">
+  <node pkg="rviz" type="rviz" name="myrviz" args="-d $(find cal_gui)/config/industrial_extrinsic_calibration.rviz" required="true" output="screen">
     <rosparam>
       base_calibration_name: "/StereoCalSrv"
     </rosparam>

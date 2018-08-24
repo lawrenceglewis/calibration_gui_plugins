@@ -12,8 +12,6 @@
 #include <QLabel>
 #include <QTimer>
 
-//#include <sstream>
-//#include <string>
 
 #include <geometry_msgs/Twist.h>
 
